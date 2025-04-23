@@ -1,6 +1,6 @@
 # mcpelauncher-strafe-sprint-fix
 
-A mod for [mcpelauncher](https://minecraft-linux.github.io) that allows you to sprint while sprinting on Intel CPUs.
+A mod for [mcpelauncher](https://minecraft-linux.github.io) that allows you to sprint while strafing on Intel CPUs.
 
 
 ## Installation
