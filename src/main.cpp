@@ -36,7 +36,7 @@ extern "C" [[gnu::visibility("default")]] void mod_init() {
     auto value = reinterpret_cast<float*>(result.rel(4));
 
     if (*value != 0.70710677f) {
-        ALOGE("Wrong value! Expected 0.70710677, got %f (address: %p)", *value, value);
+        ALOGE("Wrong value! Expected 0.70710677, got %.8f (address: %p)", *value, value);
         return;
     }
 
