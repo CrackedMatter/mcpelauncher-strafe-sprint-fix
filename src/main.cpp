@@ -26,7 +26,7 @@ extern "C" [[gnu::visibility("default")]] void mod_init() {
         },
         &callback);
 
-    auto result = hat::find_pattern(range, "F3 0F 10 05 ? ? ? ? F3 0F 59 E0 0F 28 EA"_sig);
+    auto result = hat::find_pattern(range, "F3 0F 10 05 ? ? ? ? 41 0F 2E ? ? 76 ? EB"_sig);
 
     if (!result.has_result()) {
         ALOGE("Pattern not found!");
