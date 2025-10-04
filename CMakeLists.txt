@@ -13,7 +13,8 @@ include(cmake/CPM.cmake)
 
 add_library(mcpelauncherstrafesprintfix SHARED src/main.cpp)
 
-CPMAddPackage("gh:BasedInc/libhat@0.5.0")
+#CPMAddPackage("gh:BasedInc/libhat@0.6.0")
+CPMAddPackage("gh:CrackedMatter/libhat#72d1bca325ee06a37e4510b70a54ba43aa0cb4ec")
 target_link_libraries(mcpelauncherstrafesprintfix PRIVATE libhat::libhat log)
 
 install(TARGETS mcpelauncherstrafesprintfix LIBRARY DESTINATION mods)
