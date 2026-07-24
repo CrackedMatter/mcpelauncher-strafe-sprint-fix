@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14...3.31)
+cmake_minimum_required(VERSION 3.23...3.31)
 
 project(mcpelauncherstrafesprintfix)
 
@@ -9,12 +9,13 @@ endif()
 set(CMAKE_CXX_STANDARD 23)
 
 set(CPM_SOURCE_CACHE ${PROJECT_SOURCE_DIR}/cpm-cache CACHE PATH "")
-include(cmake/CPM.cmake)
+include(vendor/CPM.cmake)
 
 add_library(mcpelauncherstrafesprintfix SHARED src/main.cpp)
 
-#CPMAddPackage("gh:BasedInc/libhat@0.6.0")
-CPMAddPackage("gh:CrackedMatter/libhat#72d1bca325ee06a37e4510b70a54ba43aa0cb4ec")
+target_compile_options(mcpelauncherstrafesprintfix PRIVATE -Wall -Wextra -Wconversion)
+
+CPMAddPackage("gh:BasedInc/libhat@0.11.1")
 target_link_libraries(mcpelauncherstrafesprintfix PRIVATE libhat::libhat log)
 
 install(TARGETS mcpelauncherstrafesprintfix LIBRARY DESTINATION mods)

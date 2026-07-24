@@ -1,33 +1,17 @@
 #define LOG_TAG "StrafeSprintFix"
 #include <android/log_macros.h>
-#include <dlfcn.h>
+#include <libhat/process.hpp>
 #include <libhat/scanner.hpp>
-#include <link.h>
 
 extern "C" [[gnu::visibility("default")]] void mod_preinit() {}
 
 extern "C" [[gnu::visibility("default")]] void mod_init() {
     using namespace hat::signature_literals;
 
-    auto mcLib = dlopen("libminecraftpe.so", 0);
+    auto mcLib = hat::process::get_module("libminecraftpe.so").value();
 
-    std::span<std::byte> range;
-
-    auto callback = [&](const dl_phdr_info& info) {
-        if (auto h = dlopen(info.dlpi_name, RTLD_NOLOAD); dlclose(h), h != mcLib)
-            return 0;
-        range = {reinterpret_cast<std::byte*>(info.dlpi_addr + info.dlpi_phdr[1].p_vaddr), info.dlpi_phdr[1].p_memsz};
-        return 1;
-    };
-
-    dl_iterate_phdr(
-        [](dl_phdr_info* info, size_t, void* data) {
-            return (*static_cast<decltype(callback)*>(data))(*info);
-        },
-        &callback);
-
-    auto value = [range] -> float* {
-        auto sigs = std::to_array<std::pair<hat::signature_view, size_t>>({
+    auto value = [range = mcLib.get_executable_data()] -> float* {
+        auto sigs = std::to_array<std::pair<hat::signature_view, std::size_t>>({
             {"0F 2E 1D ? ? ? ? B3 01"_sigv, 3},
             {"F3 0F 10 05 ? ? ? ? 41 0F 2E ? ? 76 ? EB"_sigv, 4},
             {"F3 0F 10 05 ? ? ? ? F3 0F 59 E0 0F 28 EA"_sigv, 4},
